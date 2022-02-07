@@ -44,6 +44,7 @@
     "randombytes": "^2.1.0",
     "safe-buffer": "^5.2.1",
     "schema-utils": "^3.1.1",
+    "seamless-scroll-polyfill": "^2.1.6",
     "serialize-javascript": "^6.0.0",
     "source-map": "^0.6.1",
     "source-map-support": "^0.5.21",
