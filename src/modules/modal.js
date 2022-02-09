@@ -1,7 +1,7 @@
 import { animate } from './helpers'
 
 export const modal = () => {
-    const buttons = document.querySelectorAll('.callback-btn')
+    const buttons = document.querySelectorAll('.fancyboxModal')
     const modal = document.querySelector('.modal-callback')
     const modalOverlay = document.querySelector('.modal-overlay')
 

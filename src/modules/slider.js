@@ -2,6 +2,7 @@ export const slider = () => {
     const sliderBlock = document.querySelector('.top-slider')
     const slides = document.querySelectorAll('.item')
     const texts = document.querySelectorAll('.table')
+    const ul = document.querySelector('.section-dots')
 
     slides.forEach((slide, index) => {
         if (index !== 0) {
@@ -11,10 +12,6 @@ export const slider = () => {
 
     texts[0].classList.add('active')
 
-    let ul = document.createElement('ul')
-    ul.classList.add('slick-dots')
-    sliderBlock.appendChild(ul)
-
     let dots = {}
     let currentSlide = 0
     let interval
@@ -23,7 +20,7 @@ export const slider = () => {
     const addDots = (index) => {
         for (let i = 0; i < index; i++) {
             let li = document.createElement('li')
-            i === 0 ? li.classList.add('dot', 'slick-active') : li.classList.add('dot')
+            i === 0 ? li.classList.add('dot', 'active-dot') : li.classList.add('dot')
             ul.appendChild(li)
         }
     }
@@ -33,7 +30,7 @@ export const slider = () => {
     }
 
     const nextSlide = (elems, index) => {
-        elems[index].style.display = ''
+        elems[index].style.display = 'block'
     }
 
     const prevText = (texts, index, strClass) => {
@@ -48,7 +45,7 @@ export const slider = () => {
         dots = document.querySelectorAll('.dot')
         prevSlide(slides, currentSlide)
         prevText(texts, currentSlide, 'active')
-        prevText(dots, currentSlide, 'slick-active')
+        prevText(dots, currentSlide, 'active-dot')
         currentSlide++
 
         if (currentSlide >= slides.length) {
@@ -57,7 +54,7 @@ export const slider = () => {
 
     nextSlide(slides, currentSlide)
     nextText(texts, currentSlide, 'active')
-    nextText(dots, currentSlide, 'slick-active')
+    nextText(dots, currentSlide, 'active-dot')
     }
 
     const startSlide = (timer) => {
@@ -69,7 +66,6 @@ export const slider = () => {
     }
 
     sliderBlock.addEventListener('click', (e) => {
-        // console.log(e.target)
         e.preventDefault()
 
         if (!e.target.matches('.dot')) {
@@ -78,7 +74,15 @@ export const slider = () => {
 
     prevSlide(slides, currentSlide)
     prevText(texts, currentSlide, 'active')
-    prevText(dots, currentSlide, 'slick-active')
+    prevText(dots, currentSlide, 'active-dot')
+
+    if (e.target.classList.contains('dot')) {
+        dots.forEach((dot, index) => {
+            if (e.target === dot) {
+                currentSlide = index
+            }
+        })
+    }
 
         if (currentSlide >= slides.length) {
             currentSlide = 0
@@ -90,19 +94,17 @@ export const slider = () => {
 
     nextSlide(slides, currentSlide)
     nextText(texts, currentSlide, 'active')
-    nextText(dots, currentSlide, 'slick-active')
-    })
+    nextText(dots, currentSlide, 'active-dot')
+    }, true)
 
     sliderBlock.addEventListener('mouseenter', (e) => {
-        // console.log(e.target);
-        if (e.target.matches('.slick-dots')) {
+        if (e.target.matches('.section-dots')) {
             stopSlide()
         }
     }, true)
 
     sliderBlock.addEventListener('mouseleave', (e) => {
-        // console.log(e.target);
-        if (e.target.matches('.slick-dots')) {
+        if (e.target.matches('.section-dots')) {
             startSlide(timeInterval)
         }
     }, true)

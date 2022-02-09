@@ -845,7 +845,7 @@ hr.white {
 		width: 100px;
 	}
 
-	.slick-dots {
+	.section-dots {
 		padding-top: 30px;
 	}
 }
@@ -980,20 +980,42 @@ hr.white {
 }
 
 /* top slider */
-.top-slider .slick-dots {
-	cursor: pointer;
+.section-dots {
 	position: absolute;
-	bottom: 25px;
+	bottom: 20px;
+	width: 100%;
+	margin: 20px auto 0;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	z-index: 15
 }
 
-.top-slider .slick-dots li {
+.section-dots .dot {
 	cursor: pointer;
-	border-color: #fff !important;
+	height: 16px;
+	width: 16px;
+	margin: 0 10px;
+	border-radius: 50%;
+	border: solid #fff;
+	display: inline-block;
+	-webkit-transition: background-color, -webkit-transform .4s;
+	transition: background-color, transform .4s, -webkit-transform .4s
 }
 
-.top-slider .slick-dots li.slick-active {
-	cursor: pointer;
-	background-color: #fff !important;
+.section-dots .active-dot {
+	background-color: #19b5fe;
+	-webkit-transform: scale(1.2);
+	transform: scale(1.2)
+}
+
+.section-dots .dot:hover {
+	background-color: #53c6fe;
+	-webkit-transform: scale(1.2);
+	transform: scale(1.2)
 }
 
 .top-slider {
@@ -1105,7 +1127,7 @@ video#video_background {
 	}
 
 	.top-slider .table.active {
-		webkit-transform: scale(1);
+		-webkit-transform: scale(1);
 		-ms-transform: scale(1);
 		-o-transform: scale(1);
 		transform: scale(1);
@@ -1252,18 +1274,18 @@ video#video_background {
 
 .arrow-right,
 .arrow-left {
-	width: 30px;
+	width: 50px;
 	height: 30px;
 	cursor: pointer;
 }
 
 .arrow-left {
 	transform: rotate(180deg);
-	margin-right: 20px;
+	/* margin-right: 20px; */
 }
 
 .arrow-right {
-	margin-left: 20px;
+	margin-left: 40px;
 }
 
 .services-section .element {
@@ -1385,7 +1407,7 @@ video#video_background {
 	color: #777777;
 	font-size: 14px;
 	height: 66px;
-	overflow: hidden;
+	overflow: visible;
 }
 
 .services-elements img {
