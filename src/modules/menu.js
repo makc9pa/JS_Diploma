@@ -8,7 +8,6 @@ export const menu = () => {
         if (ID) { ID = ID.substring(1) }
 
         const section = document.getElementById(ID)
-        console.log(section);
 
         if (section) {
             section.scrollIntoView({
