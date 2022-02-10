@@ -18,7 +18,7 @@ export const sendForm = ({ formId }) => {
     }
 
     const sendData = (data) => {
-        return fetch('http://localhost:3000/users', {
+        return fetch('https://jsonplaceholder.typicode.com/posts', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
