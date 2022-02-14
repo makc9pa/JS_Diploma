@@ -1,35 +1,36 @@
-const maskPhone = (selector, masked = '+_ (___) ___-__-__') => {
+const maskPhone = () => {
     
     const phoneInput = document.querySelector('.tel')
 
     function mask(event) {
         const keyCode = event.keyCode;
-        const template = masked,
-            def = template.replace(/\D/g, ""),
-            val = this.value.replace(/\D/g, "");
-        let i = 0,
-            newValue = template.replace(/[_\d]/g, function (a) {
-                return i < val.length ? val.charAt(i++) || def.charAt(i) : a;
+        const pos = this.selectionStart;
+        if (pos < 3) event.preventDefault();
+        let matrix = "+7 (___) ___ ____",
+            i = 0,
+            def = matrix.replace(/\D/g, ""),
+            val = this.value.replace(/\D/g, ""),
+            new_value = matrix.replace(/[_\d]/g, function(a) {
+                return i < val.length ? val.charAt(i++) || def.charAt(i) : a
             });
-        i = newValue.indexOf("_");
+        i = new_value.indexOf("_");
         if (i != -1) {
-            newValue = newValue.slice(0, i);
+            i < 5 && (i = 3);
+            new_value = new_value.slice(0, i)
         }
-        let reg = template.substring(0, this.value.length).replace(/_+/g,
-            function (a) {
-                return "\\d{1," + a.length + "}";
+        let reg = matrix.substring(0, this.value.length).replace(/_+/g,
+            function(a) {
+                return "\\d{1," + a.length + "}"
             }).replace(/[+()]/g, "\\$&");
         reg = new RegExp("^" + reg + "$");
-        if (!reg.test(this.value) || this.value.length < 5 || keyCode > 47 && keyCode < 58) {
-            this.value = newValue;
-        }
-        if (event.type == "blur" && this.value.length < 5) {
-            this.value = "";
-        }
-    
+        if (!reg.test(this.value) || this.value.length < 5 || keyCode > 47 && keyCode < 58) this.value = new_value;
+        if (event.type == "blur" && this.value.length < 5)  this.value = ""
     }
 
-    phoneInput.addEventListener('input', mask);
+    phoneInput.addEventListener('input', mask, false);
+    phoneInput.addEventListener('focus', mask, false);
+    phoneInput.addEventListener('blur', mask, false);
+    phoneInput.addEventListener('keydown', mask, false);
 
 }
 

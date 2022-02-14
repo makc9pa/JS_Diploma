@@ -1,15 +1,35 @@
+import { modal } from './modal'
+
 export const sendForm = ({ formId }) => {
     const form = document.getElementById(formId)
     const statusBlock = document.createElement('div')
     const loadText = 'Загрузка...'
-    const errorText = 'Ошибка...'
+    const errorText = 'Введены неполные данные в форму обратной связи'
     const successText = 'Спасибо! Наш менеджер с вами свяжется.'
+    const modal = document.querySelector('.modal-callback')
+    const modalOverlay = document.querySelector('.modal-overlay')
+
+
+    const clearStatusBlock = () => {
+        statusBlock.textContent = ''
+    }
+
+    const modalClose = () => {
+        modal.style.opacity = ''
+        modal.style.display = 'none'
+        modalOverlay.style.opacity = ''
+        modalOverlay.style.display = 'none' 
+    }
 
     const validate = (list) => {
         let success = true
 
         list.forEach(input => {
-            if (!input.value) {
+            if (!input.value || input.value.length <= 2) {
+                success = false
+            }
+
+            if (input.value.substring(0, 1) === '+' && input.value.length <=16) {
                 success = false
             }
         })
@@ -45,7 +65,8 @@ export const sendForm = ({ formId }) => {
                 .then(data => {
                     statusBlock.textContent = successText
                     statusBlock.style.color = 'black'
-
+                    setTimeout(() => clearStatusBlock(), 3000)
+                    setTimeout(() => modalClose(), 5000)
                     formElements.forEach(input => {
                         input.value = ''
                     })
@@ -55,9 +76,10 @@ export const sendForm = ({ formId }) => {
                     statusBlock.style.color = 'red'
                 })
         } else {
-            alert(' Введенные данные некорректные ')
+            console.log(formElements)
             statusBlock.textContent = errorText
             statusBlock.style.color = 'red'
+
         }
     }
 
@@ -69,11 +91,9 @@ export const sendForm = ({ formId }) => {
 
         form.addEventListener('submit', (e) => {
             e.preventDefault()
-            
             submitForm()
         })
     } catch (error) {
         console.log(error.message)
     }
-
 }
